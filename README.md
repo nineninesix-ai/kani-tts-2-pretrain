@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/logo.png" alt="Kani TTS Logo" width="150"/>
+  <img src="public/logo.png" alt="Kani TTS Logo" width="100%"/>
 
   [![](https://dcbadge.limes.pink/api/server/https://discord.gg/NzP3rjB4SB?style=flat)](https://discord.gg/NzP3rjB4SB) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -426,6 +426,10 @@ If you use this code in your research, please cite:
   note = {Open-source TTS model}
 }
 ```
+
+## Acknowledgments
+
+This project builds on **LFM2** by [Liquid AI](https://www.liquid.ai/). We thank the Liquid AI team for developing and open-sourcing the LFM2 hybrid architecture under the [LFM Open License v1.0](https://www.liquid.ai/lfm-license).
 
 ## License
 
