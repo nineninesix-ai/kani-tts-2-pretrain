@@ -1,0 +1,41 @@
+# Model Configuration
+model:
+  # Base pretrained model
+  model_id: "LiquidAI/LFM2-350M"
+
+  # Vocabulary configuration
+  text_vocab_size: 64400  # Original text vocabulary size
+  total_vocab_size: 80538  # After adding audio tokens
+
+  # Audio token configuration
+  audio_codebook_size: 4032
+  tokens_per_frame: 4
+  num_audio_layers: 4
+  audio_tokens_start: 64410  # text_vocab_size (64400) + 10 special tokens
+
+  # Frame-level position encoding
+  # Controls how much position ID advances per audio frame
+  # 1.0 = standard (1 position per frame)
+  # 0.5 = compressed time (2 frames per position unit)
+  # 0.1 = highly compressed (10 frames per position unit)
+  audio_step: 1
+
+  # Special tokens
+  pad_token_id: 64407
+
+  # Model loading
+  attn_implementation: "flash_attention_2"  # or "eager"
+  dtype: "bfloat16"  # or "float16", "float32"
+
+  # First train flag - CRITICAL!
+  # Set to true when training from base LFM2 model (will resize embeddings)
+  # Set to false when resuming from checkpoint (embeddings already resized)
+  first_train: true
+
+  # Learnable RoPE configuration
+  use_learnable_rope: true  # Enable layer-wise learnable RoPE frequencies
+  alpha_min: 0.1            # Minimum alpha value (slower rotation)
+  alpha_max: 2.0            # Maximum alpha value (faster rotation)
+
+  # Speaker embeddings
+  speaker_emb_dim: 128      # Dimension of speaker embeddings (128 -> hidden_size projection)

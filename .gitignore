@@ -1,0 +1,7 @@
+venv/
+env/
+__pycache__/
+wandb/
+checkpoints/
+train_dataset/
+train_dataset_bad/

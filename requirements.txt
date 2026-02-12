@@ -1,0 +1,9 @@
+omegaconf
+datasets
+torch
+# librosa
+#accelerate==1.10.1
+#torchaudio==2.8.0
+#flash_attn==2.8.3
+transformers
+wandb

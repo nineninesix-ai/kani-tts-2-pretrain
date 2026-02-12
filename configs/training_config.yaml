@@ -1,0 +1,51 @@
+# Training Configuration
+training:
+  # Output and checkpointing
+  output_dir: "./checkpoints"
+  overwrite_output_dir: true
+  save_steps: 5000
+  save_total_limit: 2
+
+  # Training parameters
+  num_train_epochs: 5
+  per_device_train_batch_size: 6
+  gradient_accumulation_steps: 6
+
+  # Optimizer
+  learning_rate: 9.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_steps: 2000
+  max_grad_norm: 3.0
+  optim: "adamw_torch_fused"
+  alpha_lr_ratio: 1.5  # LR ratio for learnable RoPE (alpha_lr = 0.01 × base_lr)
+
+  # Precision
+  bf16: true
+  fp16: false
+
+  # Logging
+  logging_steps: 1
+  report_to: ["wandb"]  # or ["tensorboard"], ["none"]
+
+  # Data loading
+  dataloader_num_workers: 0
+  remove_unused_columns: false
+
+  # Performance
+  average_tokens_across_devices: false
+
+  # Dataset path
+  dataset_path: "/ephemeral/train_dataset"
+
+# Wandb configuration
+wandb:
+  project: "my-tts-project"
+  name: "experiment-001"
+  entity: null  # Optional: your wandb entity/team
+
+# Attention Metrics Configuration
+metrics:
+  enable_metrics: false  # Set to false to disable metrics
+  log_steps: 100  # Compute metrics every N steps
+  influence_steps: 500  # Compute token influence every N steps (expensive)
+  print_interpretation: false  # Print human-readable interpretation to console
