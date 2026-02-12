@@ -1,9 +1,10 @@
-<div align="center">
+<div align="left">
   <img src="public/logo.png" alt="Kani TTS Logo" width="100%"/>
+  <br><br>
 
   [![](https://dcbadge.limes.pink/api/server/https://discord.gg/NzP3rjB4SB?style=flat)](https://discord.gg/NzP3rjB4SB) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-  # KaniTTS2 Pretrain
+# KaniTTS2 Pretrain
 Pretraining system for KaniTTS2 models using the LFM2 hybrid architecture.
 </div>
 
