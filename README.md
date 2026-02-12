@@ -1,4 +1,4 @@
-<div align="left">
+<div align="center">
   <img src="public/logo.png" alt="Kani TTS Logo" width="100%"/>
   <br><br>
 
