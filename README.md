@@ -417,13 +417,13 @@ trainer.push_to_hub("username/model-name", private=True)
 If you use this code in your research, please cite:
 
 ```bibtex
-@software{kanitts_2_pretrain_2026,
+@software{kanitts_2,
   author = {Nineninesix},
-  title = {KaniTTS2-Pretrain: Pretraining Framework for Text-to-Speech with Frame-level Position Encoding},
+  title = {KaniTTS2: Text-to-Speech Model with Frame-level Position Encoding},
   year = {2026},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/nineninesix-ai/kani-tts-2-pretrain}},
-  note = {Open-source TTS pretraining framework}
+  publisher = {Hugging Face},
+  howpublished = {\url{https://huggingface.co/nineninesix/kani-tts-2-pt}},
+  note = {Open-source TTS model}
 }
 ```
 
