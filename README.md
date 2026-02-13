@@ -418,7 +418,7 @@ trainer.push_to_hub("username/model-name", private=True)
 If you use this code in your research, please cite:
 
 ```bibtex
-@software{kanitts_2,
+@software{kani_tts_2,
   author = {Nineninesix},
   title = {KaniTTS2: Text-to-Speech Model with Frame-level Position Encoding},
   year = {2026},
