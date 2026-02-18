@@ -89,7 +89,7 @@ hf_datasets:
 make dataset
 ```
 
-To create your own dataset, use this (REPO)[https://github.com/nineninesix-ai/kanitts-2-dataset-pipeline]
+To create your own dataset, use this [REPO](https://github.com/nineninesix-ai/kanitts-2-dataset-pipeline)
 
 ### 4. Train Model
 
