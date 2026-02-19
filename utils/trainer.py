@@ -225,6 +225,7 @@ class KaniTTS2Trainer:
             alpha_min=self.model_config.alpha_min,
             alpha_max=self.model_config.alpha_max,
             speaker_emb_dim=self.model_config.speaker_emb_dim,
+            init_from_scratch=self.model_config.init_from_scratch,
             attn_implementation=self.model_config.attn_implementation,
             dtype=self.model_config.torch_dtype,
         )

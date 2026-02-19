@@ -510,6 +510,7 @@ class FlashCompatibleLfm2ForCausalLM(Lfm2PreTrainedModel):
         alpha_min: float = 0.1,
         alpha_max: float = 2.0,
         speaker_emb_dim: int = 128,
+        init_from_scratch: bool = False,
         *model_args,
         **kwargs
     ):
@@ -525,6 +526,7 @@ class FlashCompatibleLfm2ForCausalLM(Lfm2PreTrainedModel):
             alpha_min: Minimum alpha value for learnable RoPE
             alpha_max: Maximum alpha value for learnable RoPE
             speaker_emb_dim: Dimension of speaker embeddings (default: 128)
+            init_from_scratch: If True, skip loading pretrained weights (random initialization)
         """
         # Load config
         from transformers import AutoConfig
@@ -546,13 +548,18 @@ class FlashCompatibleLfm2ForCausalLM(Lfm2PreTrainedModel):
             speaker_emb_dim=speaker_emb_dim
         )
 
-        # Load pretrained weights
-        base_model = Lfm2ForCausalLM.from_pretrained(pretrained_model_name_or_path, **kwargs)
+        # Load pretrained weights (unless init_from_scratch=True)
+        if init_from_scratch:
+            print(f"⚠️  Initializing model from SCRATCH (random weights)")
+            print(f"   Config loaded from: {pretrained_model_name_or_path}")
+            print(f"   Pretrained weights: NOT LOADED")
+        else:
+            base_model = Lfm2ForCausalLM.from_pretrained(pretrained_model_name_or_path, **kwargs)
 
-        # Copy weights from base model to our custom model
-        model.model.load_state_dict(base_model.model.state_dict(), strict=False)
-        model.lm_head.load_state_dict(base_model.lm_head.state_dict())
+            # Copy weights from base model to our custom model
+            model.model.load_state_dict(base_model.model.state_dict(), strict=False)
+            model.lm_head.load_state_dict(base_model.lm_head.state_dict())
 
-        print(f"✅ Loaded pretrained weights from {pretrained_model_name_or_path}")
+            print(f"✅ Loaded pretrained weights from {pretrained_model_name_or_path}")
 
         return model

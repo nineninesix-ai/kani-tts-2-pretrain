@@ -32,6 +32,11 @@ model:
   # Set to false when resuming from checkpoint (embeddings already resized)
   first_train: true
 
+  # Initialize from scratch (random weights)
+  # Set to true to skip loading pretrained weights and initialize randomly
+  # Set to false to load pretrained weights from model_id
+  init_from_scratch: true
+
   # Learnable RoPE configuration
   use_learnable_rope: true  # Enable layer-wise learnable RoPE frequencies
   alpha_min: 0.1            # Minimum alpha value (slower rotation)

@@ -36,6 +36,7 @@ class ModelConfig:
 
     # Training mode
     first_train: bool = True
+    init_from_scratch: bool = False  # If True, initialize weights randomly (no pretrained weights loaded)
 
     # Learnable RoPE
     use_learnable_rope: bool = False
