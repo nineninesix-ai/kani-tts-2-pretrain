@@ -553,6 +553,39 @@ class FlashCompatibleLfm2ForCausalLM(Lfm2PreTrainedModel):
         model.model.load_state_dict(base_model.model.state_dict(), strict=False)
         model.lm_head.load_state_dict(base_model.lm_head.state_dict())
 
+        # --- FIX: restore KaniTTS-2 custom modules (speaker_emb_projection + learnable-RoPE
+        # alpha_weight) that a stock Lfm2ForCausalLM state_dict cannot carry. The load above copies
+        # only base-LFM2 keys (strict=False), so when RESUMING an already-trained kani checkpoint
+        # these two trained modules are silently left at their random init. Restoring them directly
+        # from the checkpoint is a no-op for a base LFM2 model (the keys are absent) and the fix
+        # otherwise. Mirrors how the official kani-tts-2 inference package loads learnable-RoPE models.
+        try:
+            from safetensors.torch import load_file as _load_file
+            from huggingface_hub import hf_hub_download as _hf_dl
+            import os as _os, json as _json, glob as _glob
+            def _gather_state_dict(path):
+                if _os.path.isdir(path):
+                    files = sorted(_glob.glob(_os.path.join(path, "*.safetensors")))
+                else:
+                    try:
+                        _idx = _hf_dl(path, "model.safetensors.index.json")
+                        files = [_hf_dl(path, s) for s in sorted(set(_json.load(open(_idx))["weight_map"].values()))]
+                    except Exception:
+                        files = [_hf_dl(path, "model.safetensors")]
+                sd = {}
+                for f in files:
+                    sd.update(_load_file(f))
+                return sd
+            _ckpt = _gather_state_dict(pretrained_model_name_or_path)
+            _custom = {k[len("model."):]: v for k, v in _ckpt.items()
+                       if k.startswith("model.") and ("speaker_emb_projection" in k or "learnable_rope_layers" in k)}
+            if _custom:
+                model.model.load_state_dict(_custom, strict=False)
+                print(f"✅ Restored {len(_custom)} custom tensors (speaker_emb + learnable RoPE) from checkpoint")
+        except Exception as _e:
+            print(f"⚠️  Could not restore custom modules from checkpoint ({_e!r}); they may be "
+                  f"randomly initialized if this is a resumed kani checkpoint.")
+
         print(f"✅ Loaded pretrained weights from {pretrained_model_name_or_path}")
 
         return model
